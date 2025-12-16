@@ -185,6 +185,18 @@ repair_cost = st.slider("預估維修成本 (模擬 IoT/板金數據)",
 
 # 2. 輸入 Google API Key
 user_api_key = st.text_input("請輸入 Google Gemini API Key", type="password")
+if user_api_key:
+    try:
+        genai.configure(api_key=user_api_key)
+        with st.expander("🔍 點擊查看雲端可用的模型清單 (除錯用)"):
+            st.write("正在掃描雲端伺服器支援的模型...")
+            models = []
+            for m in genai.list_models():
+                if 'generateContent' in m.supported_generation_methods:
+                    models.append(m.name)
+            st.write(models) # 這裡會直接印出所有可用的名字
+    except Exception as e:
+        st.error(f"API Key 可能有誤或無法連線: {e}")
 st.caption("還沒有 Key？[點此免費申請](https://aistudio.google.com/app/apikey)")
 
 if st.button("📝 生成專業收購評估報告"):
@@ -233,4 +245,5 @@ if st.button("📝 生成專業收購評估報告"):
             st.error(f"連線失敗，請檢查 API Key 是否正確。\n錯誤訊息：{e}")
 
 #終端機執行>>>("streamlit run valuation.py")
+
 
