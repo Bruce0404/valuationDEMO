@@ -209,7 +209,7 @@ if st.button("📝 生成專業收購評估報告"):
                 genai.configure(api_key=user_api_key)
                 
                 # B. 設定模型 (使用 Gemini 1.5 Flas，速度快且免費額度高)
-                model = genai.GenerativeModel('gemini-pro')
+                model = genai.GenerativeModel('gemini-flash-latest')
 
                 # C. 準備提示詞 (Prompt)
                 car_info = f"{target_year} {target_model}"
@@ -245,5 +245,6 @@ if st.button("📝 生成專業收購評估報告"):
             st.error(f"連線失敗，請檢查 API Key 是否正確。\n錯誤訊息：{e}")
 
 #終端機執行>>>("streamlit run valuation.py")
+
 
 
